@@ -10,31 +10,31 @@
   <!-- End-effector color" -->
   <xacro:arg name="ee_color" default="white" />
 
-  <!-- Where is the end-effector connected to?  -->
-  <xacro:arg name="connection" default="$(arg arm_id)_link8" />
+  <!-- Where is the end-effector connected to, if different from the robot flange?  -->
+  <xacro:arg name="special_connection" default="" />
 
   <!-- Should self-collision be enabled? -->
   <xacro:arg name="with_sc" default="false" />
 
-  <!-- Is the robot being controlled with ros2_control?" -->
-  <xacro:arg name="rpy" default= "0 0 ${-pi/4}" />
+  <!-- Position offset between ee and parent frame -->
+  <xacro:arg name="xyz_ee" default="0 0 0" />
 
-  <!-- IP address or hostname of the robot" -->
-  <xacro:arg name="xyz" default="0 0 0" />
+  <!-- Rotation offset between ee and parent frame -->
+  <xacro:arg name="rpy_ee" default= "0 0 ${-pi/4}" />
 
-  <!-- Should a fake hardware be used? -->
+  <!-- Position offset between ee frame and tcp frame -->
   <xacro:arg name="tcp_xyz" default="0 0 0.1034" />
 
-  <!-- Should fake sensors be used? -->
+  <!-- Rotation offset between ee frame and tcp frame -->
   <xacro:arg name="tcp_rpy" default="0 0 0" />
 
-  <!-- Should fake sensors be used? -->
+  <!-- Safety distance for the collision capsules -->
   <xacro:arg name="safety_distance" default="0.03" />
 
-  <!-- Should fake sensors be used? -->
+  <!-- Is the robot being simulated in gazebo? -->
   <xacro:arg name="gazebo" default="false" />
 
-  <!-- Should fake sensors be used? -->
+  <!-- Name of the description package -->
   <xacro:arg name="description_pkg" default="franka_description" />
 
 </robot>
