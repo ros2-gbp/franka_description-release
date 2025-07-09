@@ -1,0 +1,79 @@
+ros-humble-franka-description (1.0.1-1jammy) jammy; urgency=high
+
+  * fix: cover and mount replaced by new designs
+
+ -- Franka Robotics GmbH <support@franka.de>  Tue, 08 Jul 2025 22:00:00 -0000
+
+ros-humble-franka-description (1.0.0-1jammy) jammy; urgency=high
+
+  * breaking change: cobot pump parameters are not longer selected by default in the robot xacro
+  * fix: urdf xacros include end-effector parameters
+
+ -- Franka Robotics GmbH <support@franka.de>  Wed, 25 Jun 2025 22:00:00 -0000
+
+ros-humble-franka-description (0.5.1-1jammy) jammy; urgency=high
+
+  * feature: fr3 duo added to franka description
+  * feature: Added additional command interfaces for FX3 to the URDF
+  * feature: identify fr3v2 inertials
+  * feature: add the version tag to ros2_control
+  * fix: change paramater location in xacro/macro from arg to property
+
+ -- Franka Robotics GmbH <support@franka.de>  Tue, 18 Mar 2025 23:00:00 -0000
+
+ros-humble-franka-description (0.5.0-1jammy) jammy; urgency=high
+
+  * feature: Added prefix to single robot control
+  * fix: hand inertials fixed
+  * feature: add srdfs for arms and hand
+  * feature: add fr3v2 robot
+
+ -- Franka Robotics GmbH <support@franka.de>  Thu, 06 Mar 2025 23:00:00 -0000
+
+ros-humble-franka-description (0.4.0-1jammy) jammy; urgency=high
+
+  * feature: no prefix option added
+  * fix: use phong instead of lambert shading
+  * fix: script create_urdf.sh needs the correct user id
+  * feature: adding the .xacro definition for multi arm setups
+
+ -- Franka Robotics GmbH <support@franka.de>  Tue, 10 Dec 2024 23:00:00 -0000
+
+ros-humble-franka-description (0.3.0-1jammy) jammy; urgency=high
+
+  * feature: franka_ign_ros2_control plugin for gazebo
+  * feature: gazebo simulation joint friction and gazebo effort interface param
+  * feature: support gazebo simulation in ros2
+  * fix: rpy values added
+  * fix: link0 inertials added
+  * fix: formatting python
+  * fix: gazebo ros2 plugin name
+  * change: changed minor principal moment of inertia to satisfy triangle inequality
+  * other: Update copyright date
+  * Contributors: Andreas Kuhner, Baris Yazici, Guillermo Gomez Pena, Marius Winkelmeier
+
+ -- Franka Robotics GmbH <support@franka.de>  Tue, 26 Nov 2024 23:00:00 -0000
+
+ros-humble-franka-description (0.2.0-1jammy) jammy; urgency=high
+
+  * feat: end-effector can be deactivated with an argument
+  * feat: add dedicated folder for end-effectors
+  * fix: license name in readme
+  * Contributors: Guillermo Gomez Pena
+
+ -- Franka Robotics GmbH <support@franka.de>  Mon, 20 May 2024 22:00:00 -0000
+
+ros-humble-franka-description (0.1.10-1jammy) jammy; urgency=high
+
+
+
+ -- Franka Robotics GmbH <support@franka.de>  Sun, 21 Apr 2024 22:00:00 -0000
+
+ros-humble-franka-description (0.1.0-1jammy) jammy; urgency=high
+
+  * Publish franka_description
+  * Contributors: Baris Yazici, Enrico Sartori
+
+ -- Franka Robotics GmbH <support@franka.de>  Thu, 25 Jan 2024 23:00:00 -0000
+
+
