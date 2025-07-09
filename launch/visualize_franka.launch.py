@@ -76,7 +76,6 @@ def generate_launch_description():
                 description="Use end-effector if true. Default value is franka hand. "
                 "Robot is loaded without end-effector otherwise",
             ),
-
             DeclareLaunchArgument(
                 ee_id_parameter_name,
                 default_value="franka_hand",
@@ -86,7 +85,7 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 arm_id_parameter_name,
                 description="ID of the type of arm used. Supporter values: "
-                "fer, fr3, fp3",
+                "fer, fr3, fp3, fr3v2",
             ),
             robot_state_publisher_spawner_opaque_function,
             Node(
