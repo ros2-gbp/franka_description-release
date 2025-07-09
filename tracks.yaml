@@ -23,5 +23,5 @@ tracks:
     release_tag: :{version}
     ros_distro: humble
     vcs_type: git
-    vcs_uri: https://github.com/frankaemika/franka_description.git
-    version: 0.4.0
+    vcs_uri: https://github.com/frankarobotics/franka_description
+    version: 1.0.1
