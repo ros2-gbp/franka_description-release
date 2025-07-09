@@ -47,30 +47,35 @@ def convert_package_name_to_absolute_path(package_name, package_path, urdf_file)
 
 
 def urdf_generation(
-    package_path, xacro_file, file_name, ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot
+    package_path,
+    xacro_file,
+    file_name,
+    ONLY_EE,
+    WITH_SC,
+    EE,
+    HAND,
+    NO_PREFIX,
+    robot,
+    description_type="urdf",
 ):
     """Generate URDF file and save it."""
     xacro_file = os.path.join(package_path, xacro_file)
     urdf_file = convert_xacro_to_urdf(xacro_file, ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot)
     if ABSOLUTE_PATHS and (HOST_DIR is None or HOST_DIR == ""):
-        urdf_file = convert_package_name_to_absolute_path(
-            package_name, package_path, urdf_file
-        )
+        urdf_file = convert_package_name_to_absolute_path(package_name, package_path, urdf_file)
     elif ABSOLUTE_PATHS:
-        urdf_file = convert_package_name_to_absolute_path(
-            package_name, HOST_DIR, urdf_file
-        )
-    save_urdf_to_file(package_path, urdf_file, file_name)
+        urdf_file = convert_package_name_to_absolute_path(package_name, HOST_DIR, urdf_file)
+    save_urdf_to_file(package_path, urdf_file, file_name, description_type)
 
 
-def save_urdf_to_file(package_path, urdf_file, robot):
+def save_urdf_to_file(package_path, urdf_file, robot, description_type="urdf"):
     """Save URDF into a file."""
     # Check if the folder exists, and if not, create it
     folder_path = f"{package_path}/urdfs"
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
-    with open(f"{package_path}/urdfs/{robot}.urdf", "w") as f:
+    with open(f"{package_path}/urdfs/{robot}.{description_type}", "w") as f:
         f.write(urdf_file)
 
 
@@ -81,7 +86,7 @@ if __name__ == "__main__":
         print("Call the script from franka_description root folder")
         exit()
 
-    ROBOTS = ["multi_arm", "fr3", "fp3", "fer"]
+    ROBOTS = ["fr3v2", "fr3_duo", "fr3", "fp3", "fer"]
 
     END_EFFECTORS = ["none", "franka_hand", "cobot_pump"]
 
@@ -96,7 +101,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "robot_model",
         type=str,
-        nargs='?',
+        nargs="?",
         default="",
         help="id of the robot model (accepted values are: {})".format(robots_str),
     )
@@ -119,12 +124,8 @@ if __name__ == "__main__":
         action="store_const",
         const=True,
     )
-    parser.add_argument(
-        "--abs-path", help="Use absolute paths.", action="store_const", const=True
-    )
-    parser.add_argument(
-        "--host-dir", help="Provide a host directory for the absolute path."
-    )
+    parser.add_argument("--abs-path", help="Use absolute paths.", action="store_const", const=True)
+    parser.add_argument("--host-dir", help="Provide a host directory for the absolute path.")
     parser.add_argument(
         "--only-ee",
         help="Get urdf with solely end-effector data.",
@@ -147,10 +148,11 @@ if __name__ == "__main__":
     ABSOLUTE_PATHS = args.abs_path if args.abs_path is not None else False
     HOST_DIR = args.host_dir
     ONLY_EE = args.only_ee if args.only_ee is not None else False
-    NO_PREFIX = args.no_prefix if args.no_prefix is not None else 'false'
+    NO_PREFIX = args.no_prefix if args.no_prefix is not None else "false"
 
-    assert ROBOT_MODEL in ROBOTS or ROBOT_MODEL == "all" or \
-           ROBOT_MODEL == "none" or ROBOT_MODEL == ""
+    assert (
+        ROBOT_MODEL in ROBOTS or ROBOT_MODEL == "all" or ROBOT_MODEL == "none" or ROBOT_MODEL == ""
+    )
 
     if ROBOT_MODEL != "all" and ROBOT_MODEL != "none":
         ROBOTS = [ROBOT_MODEL]
@@ -165,27 +167,46 @@ if __name__ == "__main__":
         else:
             robot_prefix = ROBOT_MODEL
         urdf_generation(
-            package_path, xacro_file, file_name, ONLY_EE, WITH_SC,
-            EE, HAND, NO_PREFIX, robot_prefix,
+            package_path,
+            xacro_file,
+            file_name,
+            ONLY_EE,
+            WITH_SC,
+            EE,
+            HAND,
+            NO_PREFIX,
+            robot_prefix,
         )
     else:
         if ROBOT_MODEL == "none" or ROBOT_MODEL == "":
             print("\n*** Robot model must be specified ***")
         else:
             for robot in ROBOTS:
-                xacro_file = f"robots/{robot}/{robot}.urdf.xacro"
-                if HAND and EE != "none":
-                    print(f"\n*** Creating URDF for {robot} and {EE} ***")
-                    file_name = f"{robot}_{EE}"
-                else:
-                    if not HAND:
-                        print(
-                            "\n*** WARNING: --no-ee argument will be removed in future releases, "
-                            "introducing none as ee id***"
-                        )
-                    print(f"\n*** Creating URDF for {robot} ***")
-                    file_name = f"{robot}"
-                urdf_generation(
-                    package_path, xacro_file, file_name,
-                    ONLY_EE, WITH_SC, EE, HAND, NO_PREFIX, robot,
-                )
+                description_types = ["urdf", "srdf"]
+                for description_type in description_types:
+                    if description_type == "srdf" and robot == "fr3_duo":
+                        continue
+                    xacro_file = f"robots/{robot}/{robot}.{description_type}.xacro"
+                    if HAND and EE != "none":
+                        print(f"\n*** Creating {description_type} for {robot} and {EE} ***")
+                        file_name = f"{robot}_{EE}"
+                    else:
+                        if not HAND:
+                            print(
+                                "\n*** WARNING: --no-ee argument will be removed in future"
+                                " releases, introducing none as ee id***"
+                            )
+                        print(f"\n*** Creating {description_type} for {robot} ***")
+                        file_name = f"{robot}"
+                    urdf_generation(
+                        package_path,
+                        xacro_file,
+                        file_name,
+                        ONLY_EE,
+                        WITH_SC,
+                        EE,
+                        HAND,
+                        NO_PREFIX,
+                        robot,
+                        description_type,
+                    )
