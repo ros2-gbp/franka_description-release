@@ -1,6 +1,31 @@
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Changelog for package franka_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1.0.1 (2025-07-09)
+---------------
+* fix: cover and mount replaced by new designs
+
+1.0.0 (2025-06-26)
+---------------
+* breaking change: cobot pump parameters are not longer selected by default in the robot xacro
+* fix: urdf xacros include end-effector parameters
+
+0.5.1 (2025-03-19)
+---------------
+* feature: fr3 duo added to franka description
+* feature: Added additional command interfaces for FX3 to the URDF
+* feature: identify fr3v2 inertials
+* feature: add the version tag to ros2_control
+* fix: change paramater location in xacro/macro from arg to property
+
+0.5.0 (2025-03-07)
+---------------
+* feature: Added prefix to single robot control
+* fix: hand inertials fixed
+* feature: add srdfs for arms and hand
+* feature: add fr3v2 robot
+
 0.4.0 (2024-12-11)
 ------------------
 * feature: no prefix option added
